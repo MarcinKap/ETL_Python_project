@@ -11,7 +11,6 @@ class EtlProcessWithDb(Runnable):
     STEP_THREE_STRING = "Krok 3 - szukanie artysty z najwieksza liczba odsluchan"
     STEP_FOUR_STRING = "Krok 4 - szukanie 5 najpopularnijszych utworów"
     STEP_FIVE_STRING = "Krok 5 - wypisanie czasu operacji"
-    STEP_SIX_STRING = "STEP 6 - find top one listen artist"
 
     def __init__(self):
         self.__top_five_listen_tracks = []
@@ -45,10 +44,9 @@ class EtlProcessWithDb(Runnable):
         # wyszukiwanie najpopularniejszych piosenek i najpopularniejszego artysty
         find_top_5_tracks_and_most_popular_artist()
 
-        print(EtlProcessWithDb.STEP_SIX_STRING)
-
+        print(EtlProcessWithDb.STEP_FIVE_STRING)
         # koniec odliczania
         elapsed = (time.process_time() - start)
 
         # wypisanie czasu
-        print("\nProcess time: " + str(elapsed))
+        print("\nCzas pracy: " + str(elapsed)+ '\n')
