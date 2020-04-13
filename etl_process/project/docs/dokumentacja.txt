@@ -1,0 +1,31 @@
+Aplikacja - ranking najpopularniejszych tracków - proces ETL
+
+1. Cel aplikacji
+    Aplikacja ma za zadanie załadować pliki dotyczące utworów i przekształcić je
+    w taką formę aby można było łatwo te dane umieścić w bazie SQlite.
+    Sama aplikacja nie wykorzystuje bazy danych, jedynie korzysta z klas, które
+    pozwalałyby w łatwy sposób umieścić dane w bazie.
+    Wyniki zadań w dosyć łatwy sposób można by było uzyskać z bazy korzystając
+    z języka SQL. Ponieważ, po raz pierwszy mam styczność z pythonem,
+    a w zadniu nie jest wprost powiedziane aby skorzystać z bazy danych,
+    postanowiłem nie korzystać z SQL, tylko z samego pythona, żeby poznać nowe
+    funkcjonalności języka.
+
+2. Budowa aplikacji
+    Aplikacja składa się z 3 modułów main, domain oraz util.
+
+    main.py - jest to główny moduł uruchamiający aplikację oraz wywołujący
+              funkcje główne.
+
+    domain.py - jest to moduł przechowujący klasy, pozwalające na łatwą
+                transformację danych
+    util.py - moduł posiada funkcje realizujące odczyt danych oraz ich przetwarzanie
+
+3. Uruchomienie aplikacji
+    Przed uruchomieniem aplikacji w folderze files należy umieścić dwa aplikacji
+    służące do wykonania zadania. Ze względu na ich rozmiar nie dołączam ich do projektu.
+    Aby uruchomić aplikację należy wpisać komendę "python3 main.py", która uruchomi
+    główny moduł aplikacji.
+
+4. Autor
+    Krystian Katafoni - 115718, WSB Informatyka II stopień K31
