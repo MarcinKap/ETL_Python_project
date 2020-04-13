@@ -8,23 +8,13 @@ from etl_process.project.etl_process.utils.util import find_top_5_tracks_and_mos
 class EtlProcessWithDb(Runnable):
     STEP_ONE_STRING = "Krok 1 - wczytywanie danych z unique_tracks.txt"
     STEP_TWO_STRING = "Krok 2 - wczytywanie danych z triplets_sample_20p.txt"
-    STEP_THREE_STRING = "Krok 3 - szukanie artysty z najwieksza liczba odsluchan"
+    STEP_THREE_STRING = "Krok 3 - szukanie artysty z najwieksza liczba odsluchan i 5 najpopularniejszych utworów"
     STEP_FOUR_STRING = "Krok 4 - szukanie 5 najpopularnijszych utworów"
     STEP_FIVE_STRING = "Krok 5 - wypisanie czasu operacji"
 
-    def __init__(self):
-        self.__top_five_listen_tracks = []
         # self.__track_repository = TrackRepository()
 
 
-
-    @property
-    def top_five_listen_tracks(self):
-        return self.__top_five_listen_tracks
-
-    @property
-    def track_repository(self):
-        return self.__track_repository
 
     def run(self):
         # rozpoczecie odliczania
