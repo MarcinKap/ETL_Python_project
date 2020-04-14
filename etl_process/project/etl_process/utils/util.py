@@ -14,7 +14,9 @@ unique_tracks_table = """
         nazwa_artysty VARCHAR(20),
         tytul_utworu VARCHAR(20)
     )"""
-insert_stmt = 'INSERT INTO unique_tracks (identyfikator_wykonania,identyfikator_utworu,nazwa_artysty,tytul_utworu) VALUES(?,?,?,?)'
+insert_stmt = 'INSERT INTO unique_tracks ' \
+              '(identyfikator_wykonania,identyfikator_utworu,nazwa_artysty,tytul_utworu) ' \
+              'VALUES(?,?,?,?)'
 
 
 triplets_sample_table= """
@@ -24,7 +26,9 @@ triplets_sample_table= """
         identyfikator_utworu INTEGER ,
         data_odsłuchania_utworu DATETIME_INTERVAL_CODE
     )"""
-insert_triplets_sample = 'INSERT INTO triplets_sample (identyfikator_użytkownika,identyfikator_utworu,data_odsłuchania_utworu) VALUES(?,?,?)'
+insert_triplets_sample = 'INSERT INTO triplets_sample ' \
+                         '(identyfikator_użytkownika,identyfikator_utworu,data_odsłuchania_utworu) ' \
+                         'VALUES(?,?,?)'
 
 
 # FUNKCJE OD UNIQUE TRACKS
@@ -36,7 +40,7 @@ def convert_tracks_file_to_tracks():
             print('zapisywanie unique_tracks')
             for line in infile:
                 line_elements = line.split("<SEP>")
-                if(len(line_elements) == 4):
+                if len(line_elements) == 4:
                     db_cursor.execute(insert_stmt, [line_elements[0], line_elements[1], line_elements[2], line_elements[3]])
 
 # KONIEC FUNKCJI OD UNIQUE TRACKS
@@ -51,7 +55,7 @@ def convert_triplet_file_to_triplet():
             print('zapisywanie triplets_sample')
             for line in infile:
                 line_elements = line.split("<SEP>")
-                if(len(line_elements) == 3):
+                if len(line_elements) == 3:
                     db_cursor.execute(insert_triplets_sample, [line_elements[0], line_elements[1], line_elements[2]])
 
 
@@ -65,7 +69,9 @@ def find_top_5_tracks_and_most_popular_artist():
         # t2.start()
         print('Szukanie najpopularniejszych utworów')
         # szukanie utworów
-        select = 'select nazwa_utworu, count(*)  from triplets_sample JOIN unique_tracks ON [triplets_sample].identyfikator_utworu = unique_tracks.identyfikator_utworu  group by unique_tracks.nazwa_utworu order by count(*) DESC LIMIT 5'
+        select = 'select tytul_utworu, count(*)  from triplets_sample JOIN unique_tracks ' \
+                 'ON [triplets_sample].identyfikator_utworu = unique_tracks.identyfikator_utworu  ' \
+                 'group by tytul_utworu order by count(*) DESC LIMIT 5'
         rows= db_cursor.execute(select)
         print('Najpopularniejsze utwory')
         for row in rows:
@@ -73,7 +79,9 @@ def find_top_5_tracks_and_most_popular_artist():
             print('Ilość odtworzeń',row [1])
         print("Szukanie najpopularniejszego artysty")
         # szukanie artysty
-        select_2 = ' select nazwa_artysty, count(*)  from triplets_sample JOIN unique_tracks ON triplets_sample.identyfikator_utworu = unique_tracks.identyfikator_utworu  group by nazwa_artysty order by count(*) DESC LIMIT 1'
+        select_2 = 'select nazwa_artysty, count(*)  from triplets_sample JOIN unique_tracks ' \
+                   'ON triplets_sample.identyfikator_utworu = unique_tracks.identyfikator_utworu  ' \
+                   'group by nazwa_artysty order by count(*) DESC LIMIT 1'
         # SELECT Listenings.song_id, Tracks.singer, Tracks.title, COUNT(*)
         # FROM  Listenings JOIN  Tracks  ON   Listenings.song_id = Tracks.song_id  GROUP BY  Listenings.song_id  ORDER BY COUNT(*) DESC LIMIT  5
 
@@ -83,24 +91,30 @@ def find_top_5_tracks_and_most_popular_artist():
         print('Najpopularniejszy artysta to:')
         print(select_2)
 
-# def find_top_5_tracks():
-#     print('dugi watek')
-#     with connect('my_db.db') as db_connector2:
-#         db_cursor = db_connector2.cursor()
-#         db_connector2.execute(triplets_sample_table)
-#         db_cursor.execute(' select identyfikator_utworu, count(*)  from triplets_sample t group by identyfikator_utworu order by count(*) DESC LIMIT 5')
-#         rows = db_cursor.fetchall()
-#         print('Najpopularniejsze utwory')
-#         for row in rows:
-#             print('ID Piosenki', row[0])
-#             print('Ilość odtworzeń', row[1])
-#         print("Szukanie najpopularniejszego artysty")
-#
-# def find_most_popular_artist():
-#     print('wykonuje sie osobny watek')
-#     with connect('my_db.db') as db_connector2:
-#         db_connector2.execute(triplets_sample_table)
-#         db_cursor_2 = db_connector2.cursor().execute(' select nazwa_artysty, count(*)  from [triplets_sample] JOIN unique_tracks ON [triplets_sample].identyfikator_utworu = unique_tracks.identyfikator_utworu  group by nazwa_artysty order by count(*) DESC LIMIT 1')
-#         most_popular_artist = db_cursor_2.fetchone()
-#         print('Najpopularniejszy artysta to:')
-#         print(most_popular_artist)
+def find_top_5_tracks():
+    print('dugi watek')
+    with connect('my_db.db') as db_connector2:
+        db_cursor = db_connector2.cursor()
+        db_connector2.execute(triplets_sample_table)
+        db_cursor.execute(' select identyfikator_utworu, count(*)  '
+                          'from triplets_sample t group by identyfikator_utworu '
+                          'order by count(*) DESC LIMIT 5')
+        rows = db_cursor.fetchall()
+        print('Najpopularniejsze utwory')
+        for row in rows:
+            print('ID Piosenki', row[0])
+            print('Ilość odtworzeń', row[1])
+        print("Szukanie najpopularniejszego artysty")
+
+def find_most_popular_artist():
+    print('wykonuje sie osobny watek')
+    with connect('my_db.db') as db_connector2:
+        db_connector2.execute(triplets_sample_table)
+        db_cursor_2 = db_connector2.cursor().execute(' select nazwa_artysty, count(*)  '
+                                                     'from [triplets_sample] JOIN unique_tracks '
+                                                     'ON [triplets_sample].identyfikator_utworu = '
+                                                     'unique_tracks.identyfikator_utworu  '
+                                                     'group by nazwa_artysty order by count(*) DESC LIMIT 1')
+        most_popular_artist = db_cursor_2.fetchone()
+        print('Najpopularniejszy artysta to:')
+        print(most_popular_artist)

@@ -1,6 +1,8 @@
 # from etl_process.project.etl_process.track.track_repository import TrackRepository
 from etl_process.project.etl_process.utils import util as utils
+from etl_process.utils import util as utils
 import time
+from etl_process.project.etl_process.utils.runnable import Runnable
 from etl_process.project.etl_process.utils.runnable import Runnable
 from etl_process.project.etl_process.utils.util import find_top_5_tracks_and_most_popular_artist
 
@@ -12,9 +14,7 @@ class EtlProcessWithDb(Runnable):
     STEP_FOUR_STRING = "Krok 4 - szukanie 5 najpopularnijszych utworów"
     STEP_FIVE_STRING = "Krok 5 - wypisanie czasu operacji"
 
-        # self.__track_repository = TrackRepository()
-
-
+    # self.__track_repository = TrackRepository()
 
     def run(self):
         # rozpoczecie odliczania
@@ -29,7 +29,6 @@ class EtlProcessWithDb(Runnable):
         print(EtlProcessWithDb.STEP_TWO_STRING)
         utils.convert_triplet_file_to_triplet()
 
-
         print(EtlProcessWithDb.STEP_THREE_STRING)
         # wyszukiwanie najpopularniejszych piosenek i najpopularniejszego artysty
         find_top_5_tracks_and_most_popular_artist()
@@ -39,4 +38,4 @@ class EtlProcessWithDb(Runnable):
         elapsed = (time.process_time() - start)
 
         # wypisanie czasu
-        print("\nCzas pracy: " + str(elapsed)+ '\n')
+        print("\nCzas pracy: " + str(elapsed) + '\n')
